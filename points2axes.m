@@ -1,40 +1,43 @@
 function [xppt, yppt, zppt] = points2axes(varargin)
 %POINTS2AXES Conversion factors between points and axis units.
-%   [XPPT, YPPT, ZPPT] = POINTS2AXES(AX) calculates the conversion factors
-%   between points and axis units along the three Cartesian axes. XPPT is
-%   the number of x axis units that corresponds to a length of 1 point on
-%   the screen. Similarly, YPPT and ZPPT are the y and z axis units per
-%   point, respectively. AX is an optional axes handle, which defaults to
-%   the current axes if POINTS2AXES is called without an argument.
+%   [XPPT, YPPT, ZPPT] = POINTS2AXES calculates the conversion factors
+%   between points, where 1 point = 1/72 of an inch, and axis units along
+%   the three Cartesian axes for the current axes. XPPT is the number of x
+%   axis units that corresponds to a length of 1 point on the screen.
+%   Similarly, YPPT and ZPPT are the number of y and z axis units per
+%   point, respectively.
 %
-%   The conversion factors are useful for placing objects in a 2D or 3D
-%   coordinate system whose characteristic dimensions such as width,
-%   length, height, diameter, etc. are best expressed in points. Note that
-%   changing the size of the figure window or the limits, orientation, or
-%   aspect ratio of the axes directly affects the conversion factors. It is
-%   therefore recommended to set the axis limits before calling POINTS2AXES
-%   to prevent them from changing when new objects are added.
+%   [XPPT, YPPT, ZPPT] = POINTS2AXES(AX) calculates the conversion factors
+%   for the axes specified by AX instead of the current axes.
+%
+%   The conversion factors are useful for drawing objects whose
+%   characteristic dimensions such as width, length, height, diameter, etc.
+%   are best expressed in points. Note that changing the size of the figure
+%   window or the limits, orientation, or aspect ratio of the axes directly
+%   affects the conversion factors. It is therefore recommended to set the
+%   axis limits before calling POINTS2AXES to prevent them from changing
+%   when new objects are added.
 %
 %   Conversion factors can only be calculated if the (default)
-%   stretch-to-fill feature of the axes is disabled, for example by setting
-%   DASPECT.
+%   stretch-to-fill feature of the axes is disabled, which can be done by
+%   setting DASPECT, for example.
 %
 %   Logarithmic plots of any kind are not supported.
 %
 %   The conversion factors for perspective projections are
-%   position-dependent; in this case, a warning is issued and the
-%   conversion factors for orthographic projections are returned, which
-%   gives reasonable results for most applications.
+%   position-dependent and therefore do not have unique values. In this
+%   case, the conversion factors for the corresponding orthographic
+%   projection are returned, which gives sensible results in most cases,
+%   and a warning is issued.
 %
 %Example:
 %
-%   figure; ax = axes; ax.Clipping = 'off';
 %   xlim([-1 1]); ylim([-2 2]); zlim([-3 3]);
-%   view(3); daspect([3 5 2]);
-%   [xppt,yppt,zppt] = points2axes(ax);
-%   line(ax, [-20*xppt 20*xppt], [0 0], [0 0]);
-%   line(ax, [0 0], [-20*yppt 20*yppt], [0 0]);
-%   line(ax, [0 0], [0 0], [-20*zppt 20*zppt]);
+%   view(3); daspect([2 3 5]);
+%   [xppt,yppt,zppt] = points2axes;
+%   line([-20*xppt 20*xppt], [0 0], [0 0]);
+%   line([0 0], [-20*yppt 20*yppt], [0 0]);
+%   line([0 0], [0 0], [-20*zppt 20*zppt]);
 %
 %This creates three 40 point long lines in the center of a 3D plot.
 %
@@ -82,15 +85,17 @@ xIdx = 2;   % x axis
 yIdx = 4;   % y axis
 zIdx = 5;   % z axis
 
-% create four-dimensional column vectors (x,y,z,1)
-n = size(x, 2);
-v4d = [x; y; z; ones(1, n)];
+% create column vectors (x,y,z)
+v = [x; y; z];
 
 % projection matrix (orthographic projection)
-A = viewmtx(ax.View(1), ax.View(2));
+az = ax.View(1);
+el = ax.View(2);
+A = [cosd(az), sind(az), 0; ...
+    -sind(az)*sind(el), cosd(az)*sind(el), cosd(el)];
 
 % project vectors onto viewing surface (x'y')
-v2d = A * v4d;
+v2d = A * v;
 
 % x' and y' coordinates of camUp vector
 upXPrime = v2d(1, end);
