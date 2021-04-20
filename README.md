@@ -1,3 +1,5 @@
+[![View points2axes on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/90012-points2axes)
+
 # points2axes
 
 **points2axes** calculates the conversion factors between points and axis units along the three Cartesian axes.
@@ -38,6 +40,8 @@ line([0 0], [0 0], [-20*zppt 20*zppt]);
 ```
 This creates three 40 point long lines in the center of a 3D plot.
 
+![example-image](https://github.com/JorgWoehl/points2axes/blob/main/assets/example.png)
+
 ## Requirements
 
 **points2axes** has been tested on MATLAB R2021a.
@@ -45,5 +49,3 @@ This creates three 40 point long lines in the center of a 3D plot.
 ## Feedback
 
 Any feedback or suggestions for improvement are welcome!
-
-[![View points2axes on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/90012-points2axes)
