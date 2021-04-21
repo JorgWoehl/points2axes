@@ -42,15 +42,18 @@ function [xppt, yppt, zppt] = points2axes(varargin)
 %This creates three 40 point long lines in the center of a 3D plot.
 %
 % Created 2021-04-04 by Jorg C. Woehl
+% 2021-04-20 (JCW): Replaced viewmtx to speed up code (v.1.1).
+% 2021-04-21 (JCW): Fixed issue with multiple input arguments.
 
 ax = gca;
-if (nargin==1)
+if (nargin>0)
     ax = varargin{1};
     if ~isa(ax, 'matlab.graphics.axis.Axes')
         error('points2axes:IncorrectInputType',...
             ['Input 1 must be an axis handle, not "' class(ax) '".']);
     end
 end
+
 if (nargin>1)
     warning('points2axes:TooManyInputs',...
         'This function accepts only one input; other inputs are ignored.');
@@ -97,7 +100,7 @@ A = [cosd(az), sind(az), 0; ...
 % project vectors onto viewing surface (x'y')
 v2d = A * v;
 
-% x' and y' coordinates of camUp vector
+% x' and y' coordinates of camera-up vector
 upXPrime = v2d(1, end);
 upYPrime = v2d(2, end);
 % strip out camera-up vector
