@@ -44,7 +44,7 @@ This creates three 40 point long lines in the center of a 3D plot.
 
 ## Requirements
 
-**points2axes** has been tested on MATLAB R2021a.
+**points2axes** has been tested on MATLAB R2018a and R2021a.
 
 ## Feedback
 
