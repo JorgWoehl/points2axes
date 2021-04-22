@@ -42,8 +42,8 @@ function [xppt, yppt, zppt] = points2axes(varargin)
 %This creates three 40 point long lines in the center of a 3D plot.
 %
 % Created 2021-04-04 by Jorg C. Woehl
-% 2021-04-20 (JCW): Replaced viewmtx to speed up code (v.1.1).
-% 2021-04-21 (JCW): Fixed issue with multiple input arguments.
+% 2021-04-20 (JCW): Replaced viewmtx to speed up code (v1.1).
+% 2021-04-21 (JCW): Fixed issue with multiple input arguments (v1.2).
 
 ax = gca;
 if (nargin>0)

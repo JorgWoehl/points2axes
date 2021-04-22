@@ -20,7 +20,7 @@ Note that changing the size of the figure window or the limits, orientation, or 
 
 Logarithmic plots of any kind are not supported.
 
-The conversion factors for perspective projections are position-dependent and therefore do not have unique values. In this case, the conversion factors for the corresponding orthographic projection are returned, which gives sensible results in most cases, and a warning is issued.
+Conversion factors for perspective projections are position-dependent and therefore do not have unique values. In this case, the conversion factors for the corresponding orthographic projection are returned (which gives sensible results in most cases) and a warning is issued.
 
 ## Example
 
