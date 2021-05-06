@@ -40,11 +40,11 @@ line([0 0], [0 0], [-20*zppt 20*zppt]);
 ```
 This creates three 40 point long lines in the center of a 3D plot.
 
-![example-image](https://github.com/JorgWoehl/points2axes/blob/main/assets/example.png)
+![example-image](./assets/example.png)
 
 ## Requirements
 
-**points2axes** has been tested on MATLAB R2018a and R2021a.
+**points2axes** is compatible with MATLAB R2018a and later releases.
 
 ## Feedback
 

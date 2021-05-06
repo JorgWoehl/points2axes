@@ -10,25 +10,25 @@ function [xppt, yppt, zppt] = points2axes(varargin)
 %   [XPPT, YPPT, ZPPT] = POINTS2AXES(AX) calculates the conversion factors
 %   for the axes specified by AX instead of the current axes.
 %
-%   The conversion factors are useful for drawing objects whose
-%   characteristic dimensions such as width, length, height, diameter, etc.
-%   are best expressed in points. Note that changing the size of the figure
-%   window or the limits, orientation, or aspect ratio of the axes directly
-%   affects the conversion factors. It is therefore recommended to set the
-%   axis limits before calling POINTS2AXES to prevent them from changing
-%   when new objects are added.
+%   The conversion factors are useful for drawing objects whose dimensions
+%   such as width, length, height, diameter, etc. are best expressed in
+%   points. Note that changing the size of the figure window or the limits,
+%   orientation, or aspect ratio of the axes directly affects the
+%   conversion factors. It is therefore recommended to freeze the axis
+%   limits before calling POINTS2AXES to prevent them from changing when
+%   new objects are added.
 %
 %   Conversion factors can only be calculated if the (default)
-%   stretch-to-fill feature of the axes is disabled, which can be done by
-%   setting DASPECT, for example.
+%   “stretch-to-fill” behavior is disabled, which can be done by setting
+%   DASPECT, for example.
 %
 %   Logarithmic plots of any kind are not supported.
 %
-%   The conversion factors for perspective projections are
-%   position-dependent and therefore do not have unique values. In this
-%   case, the conversion factors for the corresponding orthographic
-%   projection are returned, which gives sensible results in most cases,
-%   and a warning is issued.
+%   The conversion factors for perspective projections are position-
+%   dependent and therefore do not have unique values. In this case, a
+%   warning is issued and the conversion factors for the corresponding
+%   orthographic projection are returned, which gives sensible results in
+%   most cases.
 %
 %Example:
 %
@@ -59,7 +59,7 @@ if (nargin>1)
         'This function accepts only one input; other inputs are ignored.');
 end
 
-% Projection
+% projection
 if strcmp(ax.Projection, 'perspective')
     % perspective projection
     warning('points2axes:Projection',...
@@ -79,7 +79,7 @@ zRange = diff(ax.ZLim);
 % data aspect ratio and camera-up vector
 d = ax.DataAspectRatio;
 camUp = ax.CameraUpVector;
-% edges of the axes "box" plus camera-up vector, expressed in equal length "units"
+% edges of the axes box plus camera-up vector, expressed in equal length units
 x = [0 xRange xRange 0      0      xRange xRange 0      camUp(1)] / d(1);
 y = [0 0      yRange yRange 0      0      yRange yRange camUp(2)] / d(2);
 z = [0 0      0      0      zRange zRange zRange zRange camUp(3)] / d(3);
@@ -91,7 +91,7 @@ zIdx = 5;   % z axis
 % create column vectors (x,y,z)
 v = [x; y; z];
 
-% projection matrix (orthographic projection)
+% projection matrix for orthographic projection
 az = ax.View(1);
 el = ax.View(2);
 A = [cosd(az), sind(az), 0; ...
